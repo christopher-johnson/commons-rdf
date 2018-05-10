@@ -19,8 +19,8 @@
 package org.apache.commons.rdf.jena.impl;
 
 import org.apache.commons.rdf.jena.JenaRDFTerm;
-import org.apache.jena.graph.Node;
-import org.apache.jena.riot.out.NodeFmtLib;
+import org.apache.jena.core.graph.Node;
+import org.apache.jena.arq.riot.out.NodeFmtLib;
 
 class AbstractJenaRDFTerm implements JenaRDFTerm {
     private final Node node;

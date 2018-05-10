@@ -21,19 +21,18 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
-import org.apache.commons.rdf.api.AbstractRDFTest;
 import org.apache.commons.rdf.api.BlankNode;
 import org.apache.commons.rdf.api.Dataset;
 import org.apache.commons.rdf.api.IRI;
 import org.apache.commons.rdf.api.Quad;
 import org.apache.commons.rdf.simple.SimpleRDF;
-import org.apache.jena.rdf.model.Model;
-import org.apache.jena.rdf.model.Property;
-import org.apache.jena.rdf.model.RDFNode;
-import org.apache.jena.rdf.model.Resource;
-import org.apache.jena.rdf.model.Statement;
-import org.apache.jena.sparql.core.DatasetGraph;
-import org.apache.jena.sparql.core.DatasetGraphFactory;
+import org.apache.jena.core.rdf.model.Model;
+import org.apache.jena.core.rdf.model.Property;
+import org.apache.jena.core.rdf.model.RDFNode;
+import org.apache.jena.core.rdf.model.Resource;
+import org.apache.jena.core.rdf.model.Statement;
+import org.apache.jena.arq.sparql.core.DatasetGraph;
+import org.apache.jena.arq.sparql.core.DatasetGraphFactory;
 import org.junit.Test;
 
 public class JenaRDFTest extends AbstractRDFTest {
@@ -62,7 +61,7 @@ public class JenaRDFTest extends AbstractRDFTest {
         final Quad quad = factory.createQuad(graph, subject, predicate, object);
         ds.add(quad);
         JenaRDF jenaFactory = createFactory();
-        org.apache.jena.query.Dataset jenaDS = jenaFactory.asJenaDataset(ds);
+        org.apache.jena.arq.query.Dataset jenaDS = jenaFactory.asJenaDataset(ds);
         assertEquals("Should have found one named graph!", 1, jenaDS.asDatasetGraph().size());
         Model namedModel = jenaDS.getNamedModel(graph.getIRIString());
         assertEquals("Should have found one triple in named graph!", 1, namedModel.size());

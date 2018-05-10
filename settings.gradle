@@ -1,0 +1,8 @@
+rootProject.name = 'commons-rdf'
+include ':commons-rdf-jena-jpms'
+include ':commons-rdf-api-jpms'
+include ':commons-rdf-simple-jpms'
+
+project(':commons-rdf-api-jpms').projectDir = "$rootDir/commons-rdf-api" as File
+project(':commons-rdf-jena-jpms').projectDir = "$rootDir/commons-rdf-jena" as File
+project(':commons-rdf-simple-jpms').projectDir = "$rootDir/commons-rdf-simple" as File

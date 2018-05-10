@@ -20,8 +20,8 @@ package org.apache.commons.rdf.jena.impl;
 
 import org.apache.commons.rdf.api.IRI;
 import org.apache.commons.rdf.jena.JenaIRI;
-import org.apache.jena.graph.Node;
-import org.apache.jena.graph.NodeFactory;
+import org.apache.jena.core.graph.Node;
+import org.apache.jena.core.graph.NodeFactory;
 
 class JenaIRIImpl extends AbstractJenaRDFTerm implements JenaIRI {
 

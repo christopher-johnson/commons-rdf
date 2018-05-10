@@ -37,13 +37,13 @@ import org.apache.commons.rdf.jena.JenaQuad;
 import org.apache.commons.rdf.jena.JenaRDF;
 import org.apache.commons.rdf.jena.JenaRDFTerm;
 import org.apache.commons.rdf.jena.JenaTriple;
-import org.apache.jena.graph.Node;
-import org.apache.jena.graph.NodeFactory;
-import org.apache.jena.rdf.model.Model;
-import org.apache.jena.sparql.core.DatasetGraph;
-import org.apache.jena.sparql.core.DatasetGraphFactory;
-import org.apache.jena.sparql.graph.GraphFactory;
-import org.apache.jena.system.JenaSystem;
+import org.apache.jena.core.graph.Node;
+import org.apache.jena.core.graph.NodeFactory;
+import org.apache.jena.core.rdf.model.Model;
+import org.apache.jena.arq.sparql.core.DatasetGraph;
+import org.apache.jena.arq.sparql.core.DatasetGraphFactory;
+import org.apache.jena.arq.sparql.graph.GraphFactory;
+import org.apache.jena.core.sys.JenaSystem;
 
 /**
  * Construct Jena implementations of Commons RDF.
@@ -83,7 +83,7 @@ public abstract class InternalJenaFactory {
         return new JenaDatasetImpl(dg, salt);
     }
 
-    public JenaGeneralizedQuadLike createGeneralizedQuad(final org.apache.jena.sparql.core.Quad quad, final UUID salt) {
+    public JenaGeneralizedQuadLike createGeneralizedQuad(final org.apache.jena.arq.sparql.core.Quad quad, final UUID salt) {
         return new JenaGeneralizedQuadLikeImpl(quad, salt);
     }
 
@@ -92,7 +92,7 @@ public abstract class InternalJenaFactory {
         return new JenaGeneralizedQuadLikeImpl(subject, predicate, object, Optional.ofNullable(graphName));
     }
 
-    public JenaGeneralizedTripleLike createGeneralizedTriple(final org.apache.jena.graph.Triple triple, final UUID salt) {
+    public JenaGeneralizedTripleLike createGeneralizedTriple(final org.apache.jena.core.graph.Triple triple, final UUID salt) {
         return new JenaGeneralizedTripleLikeImpl(triple, salt);
     }
 
@@ -104,7 +104,7 @@ public abstract class InternalJenaFactory {
         return new JenaGraphImpl(model, salt);
     }
 
-    public JenaGraph createGraph(final org.apache.jena.graph.Graph graph, final UUID salt) {
+    public JenaGraph createGraph(final org.apache.jena.core.graph.Graph graph, final UUID salt) {
         return new JenaGraphImpl(graph, salt);
     }
 
@@ -132,7 +132,7 @@ public abstract class InternalJenaFactory {
         return new JenaQuadImpl(subject, predicate, object, Optional.ofNullable(graphName));
     }
 
-    public JenaQuad createQuad(final org.apache.jena.sparql.core.Quad quad, final UUID salt) {
+    public JenaQuad createQuad(final org.apache.jena.arq.sparql.core.Quad quad, final UUID salt) {
         return new JenaQuadImpl(quad, salt);
     }
 
@@ -164,7 +164,7 @@ public abstract class InternalJenaFactory {
         return new JenaTripleImpl(subject, predicate, object);
     }
 
-    public JenaTriple createTriple(final org.apache.jena.graph.Triple triple, final UUID salt) {
+    public JenaTriple createTriple(final org.apache.jena.core.graph.Triple triple, final UUID salt) {
         return new JenaTripleImpl(triple, salt);
     }
 

@@ -1,0 +1,27 @@
+apply plugin: 'osgi'
+apply plugin: 'com.zyxist.chainsaw'
+
+dependencies {
+    compile("org.apache.commons:commons-rdf-api:$commonsRdfVersion")
+    testCompile("junit:junit:4.12")
+    testCompile("org.slf4j:slf4j-simple:1.7.25")
+}
+
+jar {
+    manifest {
+        description project.description
+        docURL project.docURL
+        vendor project.vendor
+        license project.license
+
+        instruction 'Automatic-Module-Name', moduleName
+        instruction 'Import-Package', '*'
+        instruction 'Export-Package', "$moduleName;version=$projectOsgiVersion"
+        instruction 'Require-Capability', '''\
+            osgi.extender; filter:="(osgi.extender=osgi.serviceloader.processor)",
+            osgi.serviceloader;
+                filter:="(osgi.serviceloader=org.apache.commons.rdf.api.RDF)";
+                resolution:=mandatory; cardinality:=at_least_one
+            '''
+    }
+}

@@ -19,26 +19,26 @@
 package org.apache.commons.rdf.jena;
 
 // NOTE: To avoid confusion, don't import Graph as it exists in both APIs
-import org.apache.jena.rdf.model.Model;
+import org.apache.jena.core.rdf.model.Model;
 //
 
 /**
  * A Jena-backed {@link org.apache.commons.rdf.api.Graph}.
  * <p>
- * The underlying Jena {@link org.apache.jena.graph.Graph} can be accessed with
+ * The underlying Jena {@link org.apache.jena.core.graph.Graph} can be accessed with
  * {@link #asJenaGraph()}.
  */
 public interface JenaGraph extends org.apache.commons.rdf.api.Graph {
 
     /**
-     * Return the underlying Jena {@link org.apache.jena.graph.Graph}.
+     * Return the underlying Jena {@link org.apache.jena.core.graph.Graph}.
      * <p>
      * Changes to the Jena graph are reflected in the Commons RDF graph and vice
      * versa.
      *
-     * @return A Jena {@link org.apache.jena.graph.Graph}
+     * @return A Jena {@link org.apache.jena.core.graph.Graph}
      */
-    public org.apache.jena.graph.Graph asJenaGraph();
+    public org.apache.jena.core.graph.Graph asJenaGraph();
 
     /**
      * Return the graph as a Jena {@link Model}.

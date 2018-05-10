@@ -21,7 +21,7 @@ import java.util.UUID;
 
 import org.apache.commons.rdf.api.RDFTerm;
 import org.apache.commons.rdf.jena.JenaGeneralizedTripleLike;
-import org.apache.jena.graph.Triple;
+import org.apache.jena.core.graph.Triple;
 
 class JenaGeneralizedTripleLikeImpl extends AbstractQuadLike<RDFTerm, RDFTerm, RDFTerm, RDFTerm>
         implements JenaGeneralizedTripleLike {

@@ -19,7 +19,7 @@
 package org.apache.commons.rdf.jena;
 
 import org.apache.commons.rdf.api.TripleLike;
-import org.apache.jena.graph.Triple;
+import org.apache.jena.core.graph.Triple;
 
 /**
  * A {@link TripleLike} wrapper of a Jena {@link Triple}.

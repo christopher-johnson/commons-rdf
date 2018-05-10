@@ -29,21 +29,21 @@ import org.apache.commons.rdf.api.RDFTerm;
 import org.apache.commons.rdf.api.Triple;
 import org.apache.commons.rdf.jena.JenaGraph;
 import org.apache.commons.rdf.jena.JenaRDF;
-import org.apache.jena.atlas.iterator.Iter;
-import org.apache.jena.graph.Node;
-import org.apache.jena.rdf.model.Model;
-import org.apache.jena.rdf.model.ModelFactory;
-import org.apache.jena.riot.Lang;
-import org.apache.jena.riot.RDFDataMgr;
+import org.apache.jena.base.atlas.iterator.Iter;
+import org.apache.jena.core.graph.Node;
+import org.apache.jena.core.rdf.model.Model;
+import org.apache.jena.core.rdf.model.ModelFactory;
+import org.apache.jena.arq.riot.Lang;
+import org.apache.jena.arq.riot.RDFDataMgr;
 
 class JenaGraphImpl implements JenaGraph {
 
-    private final org.apache.jena.graph.Graph graph;
+    private final org.apache.jena.core.graph.Graph graph;
     private final UUID salt;
     private final transient JenaRDF factory;
     private Model model;
 
-    JenaGraphImpl(final org.apache.jena.graph.Graph graph, final UUID salt) {
+    JenaGraphImpl(final org.apache.jena.core.graph.Graph graph, final UUID salt) {
         this.graph = graph;
         this.salt = salt;
         this.factory = new JenaRDF(salt);
@@ -58,7 +58,7 @@ class JenaGraphImpl implements JenaGraph {
 
     @Override
     public void add(final BlankNodeOrIRI subject, final IRI predicate, final RDFTerm object) {
-        graph.add(org.apache.jena.graph.Triple.create(factory.asJenaNode(subject), factory.asJenaNode(predicate),
+        graph.add(org.apache.jena.core.graph.Triple.create(factory.asJenaNode(subject), factory.asJenaNode(predicate),
                 factory.asJenaNode(object)));
     }
 
@@ -68,7 +68,7 @@ class JenaGraphImpl implements JenaGraph {
     }
 
     @Override
-    public org.apache.jena.graph.Graph asJenaGraph() {
+    public org.apache.jena.core.graph.Graph asJenaGraph() {
         return graph;
     }
 

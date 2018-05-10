@@ -23,9 +23,9 @@ import static org.junit.Assert.assertTrue;
 
 import org.apache.commons.rdf.api.IRI;
 import org.apache.commons.rdf.simple.SimpleRDF;
-import org.apache.jena.graph.Node;
-import org.apache.jena.graph.NodeFactory;
-import org.apache.jena.sparql.core.Quad;
+import org.apache.jena.core.graph.Node;
+import org.apache.jena.core.graph.NodeFactory;
+import org.apache.jena.arq.sparql.core.Quad;
 import org.junit.Test;
 
 /**

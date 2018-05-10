@@ -31,11 +31,11 @@ import org.apache.commons.rdf.api.TripleLike;
 import org.apache.commons.rdf.jena.JenaGraph;
 import org.apache.commons.rdf.jena.JenaRDF;
 import org.apache.commons.rdf.simple.experimental.AbstractRDFParser;
-import org.apache.jena.graph.Graph;
-import org.apache.jena.riot.Lang;
-import org.apache.jena.riot.RDFParser;
-import org.apache.jena.riot.system.StreamRDF;
-import org.apache.jena.riot.system.StreamRDFLib;
+import org.apache.jena.core.graph.Graph;
+import org.apache.jena.arq.riot.Lang;
+import org.apache.jena.arq.riot.RDFParser;
+import org.apache.jena.arq.riot.system.StreamRDF;
+import org.apache.jena.arq.riot.system.StreamRDFLib;
 
 public class JenaRDFParser extends AbstractRDFParser<JenaRDFParser> {
 

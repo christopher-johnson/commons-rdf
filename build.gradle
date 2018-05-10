@@ -1,0 +1,165 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'org.junit.platform:junit-platform-gradle-plugin:1.1.1'
+    }
+}
+
+plugins {
+    id 'com.zyxist.chainsaw' version '0.3.1'
+}
+
+ext {
+    commonsRdfVersion = '0.5.0'
+    collectionsVersion = '0.7'
+    jenaVersion = '4.0.0-SNAPSHOT'
+    junit4Version = '4.12'
+    junitVersion = '5.2.0'
+    slf4jVersion = '1.7.25'
+
+    projectOsgiVersion = project.version.replaceAll("-SNAPSHOT", ".SNAPSHOT")
+    osgiEeJavaVersion= 'osgi.ee;filter:="(&(osgi.ee=JavaSE)(version=1.10))'
+}
+
+allprojects { subproj ->
+    apply plugin: 'jacoco'
+    apply plugin: 'com.zyxist.chainsaw'
+    apply plugin: 'org.junit.platform.gradle.plugin'
+    apply plugin: 'idea'
+    apply plugin: 'java'
+    apply plugin: 'java-library'
+    apply plugin: 'maven'
+    apply plugin: 'maven-publish'
+    apply plugin: 'signing'
+
+    ext {
+        vendor = 'Apache Jena'
+        homepage = 'https://github.com/apache/commons-rdf'
+        docURL = 'https://github.com/apache/commons-rdf'
+        license = 'Apache 2'
+        moduleName = 'org.apache.commons.rdf.jena'
+
+        projectOsgiVersion = project.version.replaceAll("-SNAPSHOT", ".SNAPSHOT")
+    }
+
+    group = 'de.ubleipzig'
+
+    repositories {
+        mavenCentral()
+        jcenter()
+
+        maven {
+            url 'https://oss.sonatype.org/content/repositories/snapshots'
+        }
+    }
+
+    configurations {
+        all {
+            exclude(module: 'log4j')
+            exclude(module: 'jsr305')
+            exclude(module: 'commons-logging')
+            exclude group: 'javax.inject', module: 'javax.inject'
+            exclude group: 'org.apache.httpcomponents', module: 'httpcore-osgi'
+            exclude group: 'org.objenesis', module: 'objenesis'
+        }
+    }
+
+    junitPlatformTest.jvmArgs("--add-modules", "java.management", "--add-modules", "java.sql")
+
+    dependencies {
+        testImplementation("org.junit.jupiter:junit-jupiter-api:$junitVersion")
+        testImplementation("org.junit.jupiter:junit-jupiter-params:$junitVersion")
+        testImplementation("junit:junit:$junit4Version"){
+            exclude (module: 'hamcrest-core')
+        }
+        testRuntime("org.junit.jupiter:junit-jupiter-engine:$junitVersion")
+        testRuntime("org.junit.vintage:junit-vintage-engine:${junitVersion}"){
+            exclude (module: 'hamcrest-core')
+        }
+        compile("org.slf4j:slf4j-api:$slf4jVersion")
+    }
+}
+
+subprojects { subproj ->
+    sourceCompatibility = 1.10
+    targetCompatibility = 1.10
+
+    jar {
+        from("$rootDir/LICENSE") {
+            into "META-INF"
+        }
+    }
+
+    publishing {
+        publications {
+            maven(MavenPublication) {
+                from components.java
+            }
+        }
+    }
+
+    signing {
+        required { !version.endsWith("SNAPSHOT") && gradle.taskGraph.hasTask("uploadArchives") }
+        sign configurations.archives
+    }
+
+    uploadArchives {
+        repositories.mavenDeployer {
+            def sonatypeUsername = project.hasProperty('ossrhUsername') ? ossrhUsername : ""
+            def sonatypePassword = project.hasProperty('ossrhPassword') ? ossrhPassword : ""
+            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+                authentication(userName: sonatypeUsername, password: sonatypePassword)
+            }
+
+            snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+                authentication(userName: sonatypeUsername, password: sonatypePassword)
+            }
+
+            pom.project {
+                packaging 'jar'
+                url 'https://www.trellisldp.org'
+                inceptionYear '2017'
+                name 'Trellis Linked Data Server'
+                description 'The core components for a Trellis linked data server'
+                organization {
+                    name project.vendor
+                    url project.homepage
+                }
+
+                developers {
+                    developer {
+                        id 'acoburn'
+                        name 'Aaron Coburn'
+                        email 'acoburn (at) apache (dot) org'
+                        organization = 'Trellis LDP'
+                        organizationUrl 'https://www.trellisldp.org'
+                        roles {
+                            role 'developer'
+                        }
+                        timezone '-5'
+                    }
+                }
+
+                scm {
+                    connection 'scm:git:git://github.com/trellis-ldp/trellis.git'
+                    developerConnection 'scm:git:git@github.com/trellis-ldp/trellis.git'
+                    url 'https://github.com/trellis-ldp/trellis'
+                    tag 'HEAD'
+                }
+
+                licenses {
+                    license {
+                        name 'Apache License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0'
+                        comments 'Copyright (c) 2017-2018 Trellis LDP'
+                    }
+                }
+            }
+        }
+    }
+
+}

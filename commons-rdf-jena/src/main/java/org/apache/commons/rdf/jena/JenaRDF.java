@@ -35,26 +35,26 @@ import org.apache.commons.rdf.api.RDF;
 import org.apache.commons.rdf.api.Triple;
 import org.apache.commons.rdf.api.TripleLike;
 import org.apache.commons.rdf.jena.impl.InternalJenaFactory;
-import org.apache.jena.datatypes.RDFDatatype;
-import org.apache.jena.datatypes.xsd.XSDDatatype;
-import org.apache.jena.graph.Node;
-import org.apache.jena.graph.NodeFactory;
-import org.apache.jena.query.DatasetFactory;
-import org.apache.jena.riot.Lang;
-import org.apache.jena.riot.RDFDataMgr;
-import org.apache.jena.riot.RDFLanguages;
-import org.apache.jena.riot.system.StreamRDF;
-import org.apache.jena.riot.system.StreamRDFBase;
-import org.apache.jena.sparql.core.DatasetGraph;
-import org.apache.jena.sparql.core.DatasetGraphFactory;
-import org.apache.jena.sparql.graph.GraphFactory;
+import org.apache.jena.core.datatypes.RDFDatatype;
+import org.apache.jena.core.datatypes.xsd.XSDDatatype;
+import org.apache.jena.core.graph.Node;
+import org.apache.jena.core.graph.NodeFactory;
+import org.apache.jena.arq.query.DatasetFactory;
+import org.apache.jena.arq.riot.Lang;
+import org.apache.jena.arq.riot.RDFDataMgr;
+import org.apache.jena.arq.riot.RDFLanguages;
+import org.apache.jena.arq.riot.system.StreamRDF;
+import org.apache.jena.arq.riot.system.StreamRDFBase;
+import org.apache.jena.arq.sparql.core.DatasetGraph;
+import org.apache.jena.arq.sparql.core.DatasetGraphFactory;
+import org.apache.jena.arq.sparql.graph.GraphFactory;
 
 /**
  * Apache Jena RDF implementation.
  * <p>
  * Instances of JenaRDF can also convert existing objects from Jena with methods
  * like {@link #asRDFTerm(Node)} and
- * {@link #asGraph(org.apache.jena.graph.Graph)}, and vice versa from any
+ * {@link #asGraph(org.apache.jena.core.graph.Graph)}, and vice versa from any
  * Commons RDF object to Jena with the <code>asJena*</code> methods like
  * {@link #asJenaNode(RDFTerm)} and {@link #asJenaGraph(Graph)}.
  * <p>
@@ -160,7 +160,7 @@ public final class JenaRDF implements RDF {
      * for representing a triple in the <em>default graph</em>, this method also
      * recognize a {@link JenaIRI} which {@link JenaRDFTerm#asJenaNode()}
      * represent the default graph according to
-     * {@link org.apache.jena.sparql.core.Quad#isDefaultGraph(Node)}, in which
+     * {@link org.apache.jena.arq.sparql.core.Quad#isDefaultGraph(Node)}, in which
      * case the returned JenaQuad will have a {@link Quad#getGraphName()} of
      * {@link Optional#empty()} rather than the provided IRI.
      *
@@ -206,7 +206,7 @@ public final class JenaRDF implements RDF {
      * for representing a triple in the <em>default graph</em>, this method also
      * recognize a {@link JenaIRI} which {@link JenaRDFTerm#asJenaNode()}
      * represent the default graph according to
-     * {@link org.apache.jena.sparql.core.Quad#isDefaultGraph(Node)}, in which
+     * {@link org.apache.jena.arq.sparql.core.Quad#isDefaultGraph(Node)}, in which
      * case the returned JenaQuad will have a {@link Quad#getGraphName()} of
      * {@link Optional#empty()} rather than the provided IRI.
      *
@@ -313,21 +313,21 @@ public final class JenaRDF implements RDF {
      * instance in combination with {@link Node#getBlankNodeId()} for the
      * purpose of its {@link BlankNode#uniqueReference()}.
      *
-     * @see #asTriple(RDF, org.apache.jena.graph.Triple)
+     * @see #asTriple(RDF, org.apache.jena.core.graph.Triple)
      *
      * @param triple
-     *            Jena {@link org.apache.jena.graph.Triple} to adapt
+     *            Jena {@link org.apache.jena.core.graph.Triple} to adapt
      * @return Adapted {@link JenaTriple}
      * @throws ConversionException
      *             if any of the triple's nodes are not concrete or the triple
      *             is a generalized triple
      */
-    public JenaTriple asTriple(final org.apache.jena.graph.Triple triple) throws ConversionException {
+    public JenaTriple asTriple(final org.apache.jena.core.graph.Triple triple) throws ConversionException {
         return internalJenaFactory.createTriple(triple, salt());
     }
 
     /**
-     * Adapt a generalized Jena {@link org.apache.jena.graph.Triple} to a
+     * Adapt a generalized Jena {@link org.apache.jena.core.graph.Triple} to a
      * CommonsRDF {@link TripleLike}.
      * <p>
      * The generalized triple supports any {@link RDFTerm} as its
@@ -340,7 +340,7 @@ public final class JenaRDF implements RDF {
      * {@link Node#getBlankNodeId()} for the purpose of its
      * {@link BlankNode#uniqueReference()}.
      *
-     * @see #asTriple(RDF, org.apache.jena.graph.Triple)
+     * @see #asTriple(RDF, org.apache.jena.core.graph.Triple)
      *
      * @param triple
      *            Jena triple
@@ -350,12 +350,12 @@ public final class JenaRDF implements RDF {
      * @throws ConversionException
      *             if any of the triple's nodes are not concrete
      */
-    public JenaTripleLike asGeneralizedTriple(final org.apache.jena.graph.Triple triple) throws ConversionException {
+    public JenaTripleLike asGeneralizedTriple(final org.apache.jena.core.graph.Triple triple) throws ConversionException {
         return internalJenaFactory.createGeneralizedTriple(triple, salt());
     }
 
     /**
-     * Adapt a generalized Jena {@link org.apache.jena.sparql.core.Quad} to a
+     * Adapt a generalized Jena {@link org.apache.jena.arq.sparql.core.Quad} to a
      * CommonsRDF {@link QuadLike}.
      * <p>
      * The generalized quad supports any {@link RDFTerm} as its
@@ -368,12 +368,12 @@ public final class JenaRDF implements RDF {
      * {@link Node#getBlankNodeId()} for the purpose of its
      * {@link BlankNode#uniqueReference()}.
      * <p>
-     * If the provided quad {@link org.apache.jena.sparql.core.Quad#isDefaultGraph()},
+     * If the provided quad {@link org.apache.jena.arq.sparql.core.Quad#isDefaultGraph()},
      * the returned {@link JenaQuadLike} has a {@link JenaQuadLike#getGraphName()}
      * of {@link Optional#empty()}.
      *
-     * @see #asQuad(org.apache.jena.sparql.core.Quad)
-     * @see #asGeneralizedTriple(org.apache.jena.graph.Triple)
+     * @see #asQuad(org.apache.jena.arq.sparql.core.Quad)
+     * @see #asGeneralizedTriple(org.apache.jena.core.graph.Triple)
      *
      * @param quad
      *            Jena quad
@@ -383,12 +383,12 @@ public final class JenaRDF implements RDF {
      * @throws ConversionException
      *             if any of the quad nodes are not concrete
      */
-    public JenaQuadLike<RDFTerm> asGeneralizedQuad(final org.apache.jena.sparql.core.Quad quad) throws ConversionException {
+    public JenaQuadLike<RDFTerm> asGeneralizedQuad(final org.apache.jena.arq.sparql.core.Quad quad) throws ConversionException {
         return internalJenaFactory.createGeneralizedQuad(quad, salt());
     }
 
     /**
-     * Convert from Jena {@link org.apache.jena.graph.Triple} to a Commons RDF
+     * Convert from Jena {@link org.apache.jena.core.graph.Triple} to a Commons RDF
      * {@link Triple}.
      * <p>
      * Note that if any of the triple's nodes {@link Node#isBlank()}, then the
@@ -396,7 +396,7 @@ public final class JenaRDF implements RDF {
      * care should be taken if reusing an {@link RDF} instance for multiple
      * conversion sessions.
      *
-     * @see #asTriple(org.apache.jena.graph.Triple)
+     * @see #asTriple(org.apache.jena.core.graph.Triple)
      *
      * @param factory
      *            {@link RDF} to use for creating the {@link Triple} and its
@@ -408,7 +408,7 @@ public final class JenaRDF implements RDF {
      *             if any of the triple's nodes are not concrete or the triple
      *             is a generalized triple
      */
-    public static Triple asTriple(final RDF factory, final org.apache.jena.graph.Triple triple) throws ConversionException {
+    public static Triple asTriple(final RDF factory, final org.apache.jena.core.graph.Triple triple) throws ConversionException {
         if (factory instanceof JenaRDF) {
             // No need to convert, just wrap
             return ((JenaRDF) factory).asTriple(triple);
@@ -426,7 +426,7 @@ public final class JenaRDF implements RDF {
     }
 
     /**
-     * Adapt an existing Jena {@link org.apache.jena.sparql.core.Quad} to
+     * Adapt an existing Jena {@link org.apache.jena.arq.sparql.core.Quad} to
      * CommonsRDF {@link Quad}.
      * <p>
      * If the quad contains any {@link Node#isBlank()}, then any corresponding
@@ -434,7 +434,7 @@ public final class JenaRDF implements RDF {
      * instance in combination with {@link Node#getBlankNodeId()} for the
      * purpose of its {@link BlankNode#uniqueReference()}.
      * <p>
-     * If the provided quad {@link org.apache.jena.sparql.core.Quad#isDefaultGraph()},
+     * If the provided quad {@link org.apache.jena.arq.sparql.core.Quad#isDefaultGraph()},
      * the returned {@link JenaQuad} has a {@link Quad#getGraphName()}
      * of {@link Optional#empty()}.
      *
@@ -442,12 +442,12 @@ public final class JenaRDF implements RDF {
      *            Jena quad
      * @return Adapted quad
      */
-    public JenaQuad asQuad(final org.apache.jena.sparql.core.Quad quad) {
+    public JenaQuad asQuad(final org.apache.jena.arq.sparql.core.Quad quad) {
         return internalJenaFactory.createQuad(quad, salt());
     }
 
     /**
-     * Adapt an existing Jena {@link org.apache.jena.graph.Graph} to CommonsRDF
+     * Adapt an existing Jena {@link org.apache.jena.core.graph.Graph} to CommonsRDF
      * {@link Graph}.
      * <p>
      * This does not take a copy, changes to the CommonsRDF Graph are reflected
@@ -460,15 +460,15 @@ public final class JenaRDF implements RDF {
      * purpose of its {@link BlankNode#uniqueReference()}.
      *
      * @param graph
-     *            Jena {@link org.apache.jena.graph.Graph} to adapt
+     *            Jena {@link org.apache.jena.core.graph.Graph} to adapt
      * @return Adapted {@link JenaGraph}
      */
-    public JenaGraph asGraph(final org.apache.jena.graph.Graph graph) {
+    public JenaGraph asGraph(final org.apache.jena.core.graph.Graph graph) {
         return internalJenaFactory.createGraph(graph, salt());
     }
 
     /**
-     * Adapt an existing Jena {@link org.apache.jena.rdf.model.Model} to
+     * Adapt an existing Jena {@link org.apache.jena.core.rdf.model.Model} to
      * CommonsRDF {@link Graph}.
      * <p>
      * This does not ake a copy, changes to the CommonsRDF Graph are reflected
@@ -481,10 +481,10 @@ public final class JenaRDF implements RDF {
      * purpose of its {@link BlankNode#uniqueReference()}.
      *
      * @param model
-     *            Jena {@link org.apache.jena.rdf.model.Model} to adapt
+     *            Jena {@link org.apache.jena.core.rdf.model.Model} to adapt
      * @return Adapted {@link JenaGraph}
      */
-    public JenaGraph asGraph(final org.apache.jena.rdf.model.Model model) {
+    public JenaGraph asGraph(final org.apache.jena.core.rdf.model.Model model) {
         return internalJenaFactory.createGraph(model, salt());
     }
 
@@ -511,7 +511,7 @@ public final class JenaRDF implements RDF {
     }
 
     /**
-     * Adapt an existing Jena {@link org.apache.jena.query.Dataset} to
+     * Adapt an existing Jena {@link org.apache.jena.arq.query.Dataset} to
      * CommonsRDF {@link Dataset}.
      * <p>
      * This does not take a copy, changes to the CommonsRDF Dataset are
@@ -525,15 +525,15 @@ public final class JenaRDF implements RDF {
      * {@link BlankNode#uniqueReference()}.
      *
      * @param datasetGraph
-     *            Jena {@link org.apache.jena.query.Dataset} to adapt
+     *            Jena {@link org.apache.jena.arq.query.Dataset} to adapt
      * @return Adapted {@link JenaDataset}
      */
-    public JenaDataset asDataset(final org.apache.jena.query.Dataset datasetGraph) {
+    public JenaDataset asDataset(final org.apache.jena.arq.query.Dataset datasetGraph) {
         return internalJenaFactory.createDataset(datasetGraph.asDatasetGraph(), salt());
     }
 
     /**
-     * Convert from Jena {@link org.apache.jena.sparql.core.Quad} to a Commons
+     * Convert from Jena {@link org.apache.jena.arq.sparql.core.Quad} to a Commons
      * RDF {@link Quad}.
      * <p>
      * Note that if any of the quad's nodes {@link Node#isBlank()}, then the
@@ -541,24 +541,24 @@ public final class JenaRDF implements RDF {
      * care should be taken if reusing an {@link RDF} instance for multiple
      * conversion sessions.
      * <p>
-     * If the provided quad {@link org.apache.jena.sparql.core.Quad#isDefaultGraph()},
+     * If the provided quad {@link org.apache.jena.arq.sparql.core.Quad#isDefaultGraph()},
      * the returned {@link JenaQuadLike} has a {@link JenaQuadLike#getGraphName()}
      * of {@link Optional#empty()}.
      *
-     * @see #asQuad(org.apache.jena.sparql.core.Quad)
-     * @see #asGeneralizedQuad(org.apache.jena.sparql.core.Quad)
+     * @see #asQuad(org.apache.jena.arq.sparql.core.Quad)
+     * @see #asGeneralizedQuad(org.apache.jena.arq.sparql.core.Quad)
      *
      * @param factory
      *            {@link RDF} to use for creating the {@link Triple} and its
      *            {@link RDFTerm}s.
      * @param quad
-     *            Jena {@link org.apache.jena.sparql.core.Quad} to adapt
+     *            Jena {@link org.apache.jena.arq.sparql.core.Quad} to adapt
      * @return Converted {@link Quad}
      * @throws ConversionException
      *             if any of the quad's nodes are not concrete or the quad is a
      *             generalized quad
      */
-    public static Quad asQuad(final RDF factory, final org.apache.jena.sparql.core.Quad quad) {
+    public static Quad asQuad(final RDF factory, final org.apache.jena.arq.sparql.core.Quad quad) {
         if (factory instanceof JenaRDF) {
             // No need to convert, just wrap
             return ((JenaRDF) factory).asQuad(quad);
@@ -610,7 +610,7 @@ public final class JenaRDF implements RDF {
     public static StreamRDF streamJenaToQuad(final RDF factory, final Consumer<Quad> consumer) {
         return new StreamRDFBase() {
             @Override
-            public void quad(final org.apache.jena.sparql.core.Quad quad) {
+            public void quad(final org.apache.jena.arq.sparql.core.Quad quad) {
                 consumer.accept(asQuad(factory, quad));
             }
         };
@@ -635,7 +635,7 @@ public final class JenaRDF implements RDF {
     public StreamRDF streamJenaToGeneralizedTriple(final Consumer<TripleLike> generalizedConsumer) {
         return new StreamRDFBase() {
             @Override
-            public void triple(final org.apache.jena.graph.Triple triple) {
+            public void triple(final org.apache.jena.core.graph.Triple triple) {
                 generalizedConsumer.accept(asGeneralizedTriple(triple));
             }
         };
@@ -660,7 +660,7 @@ public final class JenaRDF implements RDF {
     public StreamRDF streamJenaToGeneralizedQuad(final Consumer<QuadLike<RDFTerm>> generalizedConsumer) {
         return new StreamRDFBase() {
             @Override
-            public void quad(final org.apache.jena.sparql.core.Quad quad) {
+            public void quad(final org.apache.jena.arq.sparql.core.Quad quad) {
                 generalizedConsumer.accept(asGeneralizedQuad(quad));
             }
         };
@@ -673,9 +673,9 @@ public final class JenaRDF implements RDF {
      *
      * @param dataset
      *            Commons RDF {@link Dataset} to convert
-     * @return Converted Jena {@link org.apache.jena.query.Dataset}
+     * @return Converted Jena {@link org.apache.jena.arq.query.Dataset}
      */
-    public org.apache.jena.query.Dataset asJenaDataset(final Dataset dataset) {
+    public org.apache.jena.arq.query.Dataset asJenaDataset(final Dataset dataset) {
         return DatasetFactory.wrap(asJenaDatasetGraph(dataset));
     }
 
@@ -686,7 +686,7 @@ public final class JenaRDF implements RDF {
      *
      * @param dataset
      *            Commons RDF {@link Dataset} to convert
-     * @return Converted Jena {@link org.apache.jena.sparql.core.DatasetGraph}
+     * @return Converted Jena {@link org.apache.jena.arq.sparql.core.DatasetGraph}
      */
     public DatasetGraph asJenaDatasetGraph(final Dataset dataset) {
         final DatasetGraph dsg;
@@ -706,13 +706,13 @@ public final class JenaRDF implements RDF {
      *
      * @param graph
      *            Commons RDF {@link Graph} to convert
-     * @return Converted Jena {@link org.apache.jena.graph.Graph}
+     * @return Converted Jena {@link org.apache.jena.core.graph.Graph}
      */
-    public org.apache.jena.graph.Graph asJenaGraph(final Graph graph) {
+    public org.apache.jena.core.graph.Graph asJenaGraph(final Graph graph) {
         if (graph instanceof JenaGraph) {
             return ((JenaGraph) graph).asJenaGraph();
         }
-        final org.apache.jena.graph.Graph g = GraphFactory.createGraphMem();
+        final org.apache.jena.core.graph.Graph g = GraphFactory.createGraphMem();
         graph.stream().forEach(t -> g.add(asJenaTriple(t)));
         return g;
     }
@@ -757,40 +757,40 @@ public final class JenaRDF implements RDF {
 
     /**
      * Convert a CommonsRDF {@link Triple} to a Jena
-     * {@link org.apache.jena.graph.Triple}.
+     * {@link org.apache.jena.core.graph.Triple}.
      * <p>
      * If the triple was from Jena originally, return that original object, else
      * create a copy using Jena objects.
      *
      * @param triple
      *            Commons RDF {@link Triple} to convert
-     * @return Converted Jena {@link org.apache.jena.graph.Triple}
+     * @return Converted Jena {@link org.apache.jena.core.graph.Triple}
      */
-    public org.apache.jena.graph.Triple asJenaTriple(final Triple triple) {
+    public org.apache.jena.core.graph.Triple asJenaTriple(final Triple triple) {
         if (triple instanceof JenaTriple) {
             return ((JenaTriple) triple).asJenaTriple();
         }
-        return org.apache.jena.graph.Triple.create(asJenaNode(triple.getSubject()),
+        return org.apache.jena.core.graph.Triple.create(asJenaNode(triple.getSubject()),
                 asJenaNode(triple.getPredicate()),
                 asJenaNode(triple.getObject()));
     }
 
     /**
      * Convert a CommonsRDF {@link Quad} to a Jena
-     * {@link org.apache.jena.sparql.core.Quad}.
+     * {@link org.apache.jena.arq.sparql.core.Quad}.
      * <p>
      * If the quad was from Jena originally, return that original object,
      * otherwise create a copy using Jena objects.
      *
      * @param quad
      *            Commons RDF {@link Quad} to convert
-     * @return Converted Jena {@link org.apache.jena.sparql.core.Quad}
+     * @return Converted Jena {@link org.apache.jena.arq.sparql.core.Quad}
      */
-    public org.apache.jena.sparql.core.Quad asJenaQuad(final Quad quad) {
+    public org.apache.jena.arq.sparql.core.Quad asJenaQuad(final Quad quad) {
         if (quad instanceof JenaQuad) {
             return ((JenaQuad) quad).asJenaQuad();
         }
-        return org.apache.jena.sparql.core.Quad.create(
+        return org.apache.jena.arq.sparql.core.Quad.create(
                 asJenaNode(quad.getGraphName().orElse(null)),
                 asJenaNode(quad.getSubject()),
                 asJenaNode(quad.getPredicate()),

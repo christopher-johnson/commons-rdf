@@ -22,7 +22,7 @@ import java.util.UUID;
 
 import org.apache.commons.rdf.api.RDFTerm;
 import org.apache.commons.rdf.jena.JenaGeneralizedQuadLike;
-import org.apache.jena.sparql.core.Quad;
+import org.apache.jena.arq.sparql.core.Quad;
 
 class JenaGeneralizedQuadLikeImpl extends AbstractQuadLike<RDFTerm, RDFTerm, RDFTerm, RDFTerm>
         implements JenaGeneralizedQuadLike {

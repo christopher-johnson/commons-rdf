@@ -21,9 +21,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import org.apache.commons.rdf.api.BlankNode;
-import org.apache.jena.graph.Node;
-import org.apache.jena.graph.NodeFactory;
-import org.apache.jena.graph.Triple;
+import org.apache.jena.core.graph.Node;
+import org.apache.jena.core.graph.NodeFactory;
+import org.apache.jena.core.graph.Triple;
 import org.junit.Test;
 
 public class GeneralizedRDFTripleTest {

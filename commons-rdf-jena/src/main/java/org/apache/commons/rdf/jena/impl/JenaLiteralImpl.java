@@ -25,7 +25,7 @@ import java.util.Optional;
 import org.apache.commons.rdf.api.IRI;
 import org.apache.commons.rdf.api.Literal;
 import org.apache.commons.rdf.jena.JenaLiteral;
-import org.apache.jena.graph.Node;
+import org.apache.jena.core.graph.Node;
 
 class JenaLiteralImpl extends AbstractJenaRDFTerm implements JenaLiteral {
 

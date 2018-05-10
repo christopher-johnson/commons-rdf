@@ -18,7 +18,7 @@
 
 package org.apache.commons.rdf.jena.impl;
 
-import static org.apache.jena.graph.Node.ANY;
+import static org.apache.jena.core.graph.Node.ANY;
 
 import java.io.StringWriter;
 import java.util.Optional;
@@ -34,12 +34,12 @@ import org.apache.commons.rdf.api.RDFTerm;
 import org.apache.commons.rdf.jena.JenaDataset;
 import org.apache.commons.rdf.jena.JenaGraph;
 import org.apache.commons.rdf.jena.JenaRDF;
-import org.apache.jena.atlas.iterator.Iter;
-import org.apache.jena.graph.Node;
-import org.apache.jena.riot.Lang;
-import org.apache.jena.riot.RDFDataMgr;
-import org.apache.jena.sparql.core.DatasetGraph;
-import org.apache.jena.sparql.core.GraphView;
+import org.apache.jena.base.atlas.iterator.Iter;
+import org.apache.jena.core.graph.Node;
+import org.apache.jena.arq.riot.Lang;
+import org.apache.jena.arq.riot.RDFDataMgr;
+import org.apache.jena.arq.sparql.core.DatasetGraph;
+import org.apache.jena.arq.sparql.core.GraphView;
 
 class JenaDatasetImpl implements JenaDataset {
 
@@ -55,7 +55,7 @@ class JenaDatasetImpl implements JenaDataset {
 
     @Override
     public void add(final BlankNodeOrIRI graphName, final BlankNodeOrIRI subject, final IRI predicate, final RDFTerm object) {
-        datasetGraph.add(org.apache.jena.sparql.core.Quad.create(factory.asJenaNode(graphName), factory.asJenaNode(subject),
+        datasetGraph.add(org.apache.jena.arq.sparql.core.Quad.create(factory.asJenaNode(graphName), factory.asJenaNode(subject),
                 factory.asJenaNode(predicate), factory.asJenaNode(object)));
     }
 
@@ -129,7 +129,7 @@ class JenaDatasetImpl implements JenaDataset {
     public long size() {
         final long quads = Iter.asStream(datasetGraph.listGraphNodes())
                 .map(datasetGraph::getGraph)
-                .collect(Collectors.summingLong(org.apache.jena.graph.Graph::size));
+                .collect(Collectors.summingLong(org.apache.jena.core.graph.Graph::size));
         return quads + datasetGraph.getDefaultGraph().size();
     }
 

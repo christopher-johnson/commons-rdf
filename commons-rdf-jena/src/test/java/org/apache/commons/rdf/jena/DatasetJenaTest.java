@@ -19,7 +19,6 @@ package org.apache.commons.rdf.jena;
 
 import static org.junit.Assert.assertEquals;
 
-import org.apache.commons.rdf.api.AbstractDatasetTest;
 import org.apache.commons.rdf.api.IRI;
 import org.apache.commons.rdf.api.Literal;
 import org.apache.commons.rdf.api.RDF;

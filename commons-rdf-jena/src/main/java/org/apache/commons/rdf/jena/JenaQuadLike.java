@@ -20,7 +20,7 @@ package org.apache.commons.rdf.jena;
 
 import org.apache.commons.rdf.api.QuadLike;
 import org.apache.commons.rdf.api.RDFTerm;
-import org.apache.jena.sparql.core.Quad;
+import org.apache.jena.arq.sparql.core.Quad;
 
 /**
  * A {@link QuadLike} wrapper of a Jena {@link Quad}.

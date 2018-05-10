@@ -19,7 +19,7 @@
 package org.apache.commons.rdf.jena;
 
 import org.apache.commons.rdf.api.RDFTerm;
-import org.apache.jena.graph.Node;
+import org.apache.jena.core.graph.Node;
 
 /**
  * A Jena-backed {@link RDFTerm}.

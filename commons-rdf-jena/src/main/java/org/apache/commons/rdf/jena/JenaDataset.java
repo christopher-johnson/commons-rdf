@@ -20,7 +20,7 @@ package org.apache.commons.rdf.jena;
 
 import org.apache.commons.rdf.api.Dataset;
 import org.apache.commons.rdf.api.Graph;
-import org.apache.jena.sparql.core.DatasetGraph;
+import org.apache.jena.arq.sparql.core.DatasetGraph;
 
 /**
  * A Jena-backed {@link Dataset}.

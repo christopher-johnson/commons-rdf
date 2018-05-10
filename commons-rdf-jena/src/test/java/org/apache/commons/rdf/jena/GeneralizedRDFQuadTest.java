@@ -21,9 +21,9 @@ import static org.junit.Assert.*;
 
 import org.apache.commons.rdf.api.BlankNode;
 import org.apache.commons.rdf.api.RDFTerm;
-import org.apache.jena.graph.Node;
-import org.apache.jena.graph.NodeFactory;
-import org.apache.jena.sparql.core.Quad;
+import org.apache.jena.core.graph.Node;
+import org.apache.jena.core.graph.NodeFactory;
+import org.apache.jena.arq.sparql.core.Quad;
 import org.junit.Test;
 
 public class GeneralizedRDFQuadTest {

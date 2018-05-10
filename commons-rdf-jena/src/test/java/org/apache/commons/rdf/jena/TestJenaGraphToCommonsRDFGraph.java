@@ -32,9 +32,9 @@ import org.apache.commons.rdf.api.Graph;
 import org.apache.commons.rdf.api.RDFTerm;
 import org.apache.commons.rdf.api.Triple;
 import org.apache.commons.rdf.simple.Types;
-import org.apache.jena.riot.Lang;
-import org.apache.jena.riot.RDFDataMgr;
-import org.apache.jena.sparql.graph.GraphFactory;
+import org.apache.jena.arq.riot.Lang;
+import org.apache.jena.arq.riot.RDFDataMgr;
+import org.apache.jena.arq.sparql.graph.GraphFactory;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -59,7 +59,7 @@ public class TestJenaGraphToCommonsRDFGraph {
 
     @Test
     public void jenaToCommonsRDF() throws Exception {
-        final org.apache.jena.graph.Graph jGraph = GraphFactory.createGraphMem();
+        final org.apache.jena.core.graph.Graph jGraph = GraphFactory.createGraphMem();
         RDFDataMgr.read(jGraph, turtleFile.toUri().toString());
 
         final JenaRDF factory = new JenaRDF();
